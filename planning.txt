@@ -1,0 +1,35 @@
+
+For this portfolio project I am going to create a web-based application to show information about soccer matches being played in the UEFA Champions League, such as teams playing, matchups, event information, scores, and more. I am hoping to make the application feature-rich and display as much information as possible, maybe even with a simple front-end UI, time permitting. The goal will be to emulate ESPN’s system for displaying match information, although not as in-depth.
+
+The REST API endpoints I would like to implement will be the basic CRUD operations, including creating, reading, updating, and deleting information from the database about the soccer matches. Some examples would be to create a PATCH endpoint for match scores, create a GET endpoint for team rosters, etc. These will likely be formatted as request bodies in JSON.
+The database itself will be normalized to reduce data redundancy by separating certain information into separate tables, such as teams, team rosters, match/venue information, and match scores.
+
+Teams:
+
+·         Team ID (serial) (primary key)
+·         Name (text) (unique) (non-nullable)
+·         Location (text) (non-nullable)
+·         Wins (tinyint) (non-nullable)
+·         Losses (tinyint) (non-nullable)
+
+Rosters:
+
+·         Player ID (serial) (primary key)
+·         Name (text) (non-nullable)
+·         Number (tinyint) (unique) (non-nullable)
+·         Team (text) (foreign key) (non-nullable)
+·         Position (text) (non-nullable)
+
+Matches:
+
+·         Match ID (serial) (primary key)
+·         Date (smalldatetime) (non-nullable)
+·         Home team (text) (non-nullable)
+·         Away team (text) (non-nullable)
+
+Match results:
+
+·	    Match ID (foreign key) (non-nullable)
+·         Home team goals (tinyint) (default=0) (non-nullable)
+·         Away team goals (tinyint) (default=0) (non-nullable)
+·         Winner (text)
