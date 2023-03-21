@@ -4,3 +4,5 @@ from django.db import models
 class Match(models.Model):
     date = models.DateField()
     time = models.DateTimeField()
+    home_team = models.CharField(max_length=64)
+    away_team = models.CharField(max_length=64)

@@ -1,3 +1,57 @@
 from django.shortcuts import render
+from django.http.response import JsonResponse
+from rest_framework.parsers import JSONParser
+from rest_framework import status
+from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from matches.models import Match
+from matches.serializer import MatchSerializer
+from rest_framework.decorators import api_view
+
+
+def index(request):
+    print("Here")
+    queryset = Team.objects.all()
+    return render(request, 'matches/index.html', {'matches': queryset})
+
+class index(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'matches/index.html'
+
+    def get(self, request):
+        queryset = Team.objects.all()
+        return Response({'matches': queryset})
+
+class list_all_matches(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'matches/team_list.html'
+
+    def get(self, request):
+        queryset = Team.objects.all()
+        return Response({'matches': queryset})
 
 # Create your views here.
+@api_view(['GET', 'POST', 'DELETE'])
+def matches_list(request):
+    if request.method == 'GET':
+        matches = Team.objects.all()
+        matches_serializer = MatchSerializer(matches, many=True)
+        return JsonResponse(matches_serializer.data, safe=False)
+    
+    elif request.method == 'POST':
+        team_data = JSONParser().parse(request)
+        team_serializer = MatchSerializer(data=team_data)
+        if team_serializer.is_valid():
+            team_serializer.save()
+            return JsonResponse(team_serializer.data, status=status.HTTP_201_CREATED)
+        return JsonResponse(team_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'DELETE':
+        count = Match.objects.all().delete()
+        return JsonResponse(
+            {
+                'message': f'{count[0]} matches were deleted successfully'
+            },
+            status=status.HTTP_204_NO_CONTENT
+        )
