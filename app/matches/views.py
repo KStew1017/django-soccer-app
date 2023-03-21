@@ -12,7 +12,7 @@ from rest_framework.decorators import api_view
 
 def index(request):
     print("Here")
-    queryset = Team.objects.all()
+    queryset = Match.objects.all()
     return render(request, 'matches/index.html', {'matches': queryset})
 
 class index(APIView):
@@ -20,32 +20,32 @@ class index(APIView):
     template_name = 'matches/index.html'
 
     def get(self, request):
-        queryset = Team.objects.all()
+        queryset = Match.objects.all()
         return Response({'matches': queryset})
 
 class list_all_matches(APIView):
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'matches/team_list.html'
+    template_name = 'matches/match_list.html'
 
     def get(self, request):
-        queryset = Team.objects.all()
+        queryset = Match.objects.all()
         return Response({'matches': queryset})
 
 # Create your views here.
 @api_view(['GET', 'POST', 'DELETE'])
 def matches_list(request):
     if request.method == 'GET':
-        matches = Team.objects.all()
+        matches = Match.objects.all()
         matches_serializer = MatchSerializer(matches, many=True)
         return JsonResponse(matches_serializer.data, safe=False)
     
     elif request.method == 'POST':
-        team_data = JSONParser().parse(request)
-        team_serializer = MatchSerializer(data=team_data)
-        if team_serializer.is_valid():
-            team_serializer.save()
-            return JsonResponse(team_serializer.data, status=status.HTTP_201_CREATED)
-        return JsonResponse(team_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        match_data = JSONParser().parse(request)
+        match_serializer = MatchSerializer(data=match_data)
+        if match_serializer.is_valid():
+            match_serializer.save()
+            return JsonResponse(match_serializer.data, status=status.HTTP_201_CREATED)
+        return JsonResponse(match_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     elif request.method == 'DELETE':
         count = Match.objects.all().delete()
