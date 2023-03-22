@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block match_content %}
+<div>
+    <h1>Matches</h1>
+    {% for match in matches %}
+    <ul>
+        <li>{{ match.away_team }} @ {{ match.home_team }}
+            <ul>
+                <li>Date: {{ match.date_time }}</li>
+                <li>Location: {{ match.location }}</li>
+            </ul>
+        </li>
+    </ul>
+    {% endfor %}
+</div>
+{% endblock %}

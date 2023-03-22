@@ -1,10 +1,10 @@
 from django.urls import path
-from matches import views as views
+from players import views as views
 from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
     path('', views.index.as_view(), name='home'),
-    path('api/matches/', views.matches_list),
-    path('api/matches/<int:id>/', views.individual_match)
+    path('api/players/', views.players_list),
+    path('api/players/<int:id>/', views.individual_player)
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

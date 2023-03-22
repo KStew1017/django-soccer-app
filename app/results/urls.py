@@ -1,10 +1,10 @@
 from django.urls import path
-from matches import views as views
+from results import views as views
 from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
     path('', views.index.as_view(), name='home'),
-    path('api/matches/', views.matches_list),
-    path('api/matches/<int:id>/', views.individual_match)
+    path('api/results/', views.results_list),
+    path('api/results/<int:id>/', views.individual_result)
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

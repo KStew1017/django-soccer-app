@@ -55,3 +55,26 @@ def matches_list(request):
             },
             status=status.HTTP_204_NO_CONTENT
         )
+
+@api_view(['GET', 'DELETE', 'PATCH'])
+def individual_match(request, id):
+    try:
+        match = Match.objects.get(pk=id)
+    except Match.DoesNotExist:
+        return JsonResponse({'message': 'The match does not exist'}, status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'GET':
+        match_serializer = MatchSerializer(match)
+        return JsonResponse(match_serializer.data)
+    
+    elif request.method == 'PUT':
+        match_data = JSONParser().parse(request)
+        match_serializer = MatchSerializer(match, data=match_data)
+        if match_serializer.is_valid():
+            match_serializer.save()
+            return JsonResponse(match_serializer.data)
+        return JsonResponse(match_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        match.delete()
+        return JsonResponse({'message': 'Match was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)

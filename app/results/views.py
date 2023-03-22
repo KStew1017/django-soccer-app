@@ -61,13 +61,13 @@ def individual_result(request, id):
     try:
         result = Result.objects.get(pk=id)
     except Result.DoesNotExist:
-        return JsonResponse({'message': 'The tutorial does not exist'}, status=status.HTTP_404_NOT_FOUND)
+        return JsonResponse({'message': 'The result does not exist'}, status=status.HTTP_404_NOT_FOUND)
     
     if request.method == 'GET':
         result_serializer = ResultSerializer(result)
         return JsonResponse(result_serializer.data)
     
-    elif request.method == 'PUT':
+    elif request.method == 'PATCH':
         result_data = JSONParser().parse(request)
         result_serializer = ResultSerializer(result, data=result_data)
         if result_serializer.is_valid():

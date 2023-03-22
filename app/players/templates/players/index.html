@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block player_content %}
+<div>
+    <h1>Players</h1>
+    {% for player in players %}
+    <ul>
+        <li>{{ player.name }}
+            <ul>
+                <li>Number: {{ player.number }}</li>
+                <li>Position: {{ player.position }}</li>
+                <li>Team: {{ player.team }}</li>
+            </ul>
+        </li>
+    </ul>
+    {% endfor %}
+</div>
+{% endblock %}

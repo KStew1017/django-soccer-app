@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block team_content %}
+<div>
+    <h1>Teams</h1>
+    {% for team in teams %}
+    <ul>
+        <li>{{ team.name }}
+            <ul>
+                <li>Location: {{ team.location }}</li>
+                <li>Wins: {{ team.wins }}</li>
+                <li>Losses: {{ team.losses }}</li>
+            </ul>
+        </li>
+    </ul>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block player_content %}
+<div>
+    <h1>Players</h1>
+    {% for player in players %}
+    <ul>
+        <li>{{ player.name }}
+            <ul>
+                <li>Number: {{ player.number }}</li>
+                <li>Position: {{ player.position }}</li>
+                <li>Team: {{ player.team }}</li>
+            </ul>
+        </li>
+    </ul>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block match_content %}
+<div>
+    <h1>Matches</h1>
+    {% for match in matches %}
+    <ul>
+        <li>{{ match.away_team }} @ {{ match.home_team }}
+            <ul>
+                <li>Date: {{ match.date_time }}</li>
+                <li>Location: {{ match.location }}</li>
+            </ul>
+        </li>
+    </ul>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block result_content %}
+<div>
+    <h1>Results</h1>
+    {% for result in results %}
+    <ul>
+        <li>{{ result.match }}
+            <ul>
+                <li>Home Team Goals: {{ result.home_team_goals }}</li>
+                <li>Away Team Goals: {{ result.away_team_goals }}</li>
+                <li>Winner: {{ result.winner }}</li>
+            </ul>
+        </li>
+    </ul>
+    {% endfor %}
+</div>
+{% endblock %}

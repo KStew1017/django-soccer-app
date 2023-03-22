@@ -6,3 +6,6 @@ class Team(models.Model):
     location = models.CharField(max_length=64, default='')
     wins = models.PositiveSmallIntegerField()
     losses = models.PositiveSmallIntegerField()
+
+    def __str__(self):
+        return self.name

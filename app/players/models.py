@@ -7,3 +7,5 @@ class Player(models.Model):
     position = models.CharField(max_length=32)
     team = models.ForeignKey('teams.Team', on_delete=models.CASCADE, default='')
     
+    def __str__(self):
+        return self.name

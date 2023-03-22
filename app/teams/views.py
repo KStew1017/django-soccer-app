@@ -61,7 +61,7 @@ def individual_team(request, id):
     try:
         team = Team.objects.get(pk=id)
     except Team.DoesNotExist:
-        return JsonResponse({'message': 'The tutorial does not exist'}, status=status.HTTP_404_NOT_FOUND)
+        return JsonResponse({'message': 'The team does not exist'}, status=status.HTTP_404_NOT_FOUND)
     
     if request.method == 'GET':
         team_serializer = TeamSerializer(team)
