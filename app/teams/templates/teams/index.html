@@ -1,5 +1,17 @@
-{% extends "teams/base.html" %} {% load static %}
-{% block title %}Teams{% endblock %}
+{% extends "teams/base.html" %}
 {% block content %}
-<h1>Hello World, from index!</h1>
+<div>
+    <h1>Teams</h1>
+    {% for team in teams %}
+    <ul>
+        <li>{{ team.name }}
+            <ul>
+                <li>Location: {{ team.location }}</li>
+                <li>Wins: {{ team.wins }}</li>
+                <li>Losses: {{ team.losses }}</li>
+            </ul>
+        </li>
+    </ul>
+    {% endfor %}
+</div>
 {% endblock %}

@@ -56,7 +56,7 @@ def teams_list(request):
             status=status.HTTP_204_NO_CONTENT
         )
 
-@api_view(['GET', 'DELETE', 'POST', 'PATCH'])
+@api_view(['GET', 'DELETE', 'PATCH'])
 def individual_team(request, id):
     try:
         team = Team.objects.get(pk=id)
@@ -77,5 +77,4 @@ def individual_team(request, id):
 
     elif request.method == 'DELETE':
         team.delete()
-        return JsonResponse({'message': 'Team was deleted successfully!'},
-                            status=status.HTTP_204_NO_CONTENT)
+        return JsonResponse({'message': 'Team was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
