@@ -1,10 +1,4 @@
-from django.shortcuts import render, get_object_or_404
-from django.http.response import JsonResponse
-from rest_framework.parsers import JSONParser
-from rest_framework import status
-from rest_framework.renderers import TemplateHTMLRenderer
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from django.shortcuts import render
 from teams.models import Team
 from results.models import Result
 from players.models import Player
