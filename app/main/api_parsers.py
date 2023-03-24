@@ -3,7 +3,7 @@ import json
 
 
 def get_players(req):
-    response = requests.get(f'{req}')
+    response = requests.get(req)
 
     if (response and response.status_code) == 200:
         data = response.json()
@@ -29,11 +29,12 @@ def get_players(req):
 
         roster.append(players)
 
-    return roster
+    data = json.dumps(roster, indent=4)
+    return data
 
 
 def get_teams(req):
-    response = requests.get(f'{req}')
+    response = requests.get(req)
 
     if (response and response.status_code) == 200:
         data = response.json()
@@ -72,10 +73,13 @@ def get_teams(req):
 
         i += 1
 
-    
-    # print(teams_list)
-    print(teams)
+    data = json.dumps(teams, indent=4)
+    return data
 
+def get_matches(req):
+    response = requests.get(req)
 
-
-get_teams('http://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/teams')
+    if (response and response.status_code) == 200:
+        data = response.json()
+    else:
+        None
