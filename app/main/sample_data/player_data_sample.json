@@ -1,0 +1,52 @@
+{
+	"timestamp": "2023-03-24T21:42:19Z",
+	"status": "success",
+	"athletes": [
+		{
+			"id": "37557",
+			"uid": "s:600~a:37557",
+			"guid": "4e21cf0c40e8471e13567f49d267a6ed",
+			"firstName": "Scott",
+			"lastName": "Carson",
+			"fullName": "Scott Carson",
+			"displayName": "Scott Carson",
+			"shortName": "S Carson",
+			"weight": 185.0,
+			"displayWeight": "185 lbs",
+			"height": 74.0,
+			"displayHeight": "6' 2\"",
+			"age": 37,
+			"dateOfBirth": "1985-09-03T07:00Z",
+			"gender": "MALE",
+			"citizenship": "England",
+			"citizenshipCountry": {
+				"alternateId": "31",
+				"abbreviation": "ENG"
+			},
+			"slug": "scott-carson",
+			"jersey": "33",
+			"position": {
+				"id": "1",
+				"name": "Goalkeeper",
+				"displayName": "Goalkeeper",
+				"abbreviation": "G",
+				"leaf": true
+			}
+        }
+	],
+	"team": {
+		"id": "382",
+		"abbreviation": "MNC",
+		"location": "Manchester City",
+		"name": "Manchester City",
+		"displayName": "Manchester City",
+		"clubhouse": "https://www.espn.com/soccer/club/_/id/382/manchester-city",
+		"color": "61acdf",
+		"logo": "https://a.espncdn.com/i/teamlogos/soccer/500/382.png",
+		"seasonSummary": "2022-23",
+		"isNational": false,
+		"groups": {
+			"$ref": "http://sports.core.api.espn.pvt/v2/sports/soccer/leagues/uefa.champions/seasons/2022/types/3/groups/7?lang=en&region=us"
+		}
+	}
+}

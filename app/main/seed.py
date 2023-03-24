@@ -1,5 +1,21 @@
 import requests
 import json
+import psycopg2
+import time
+import unicodedata
+
+
+def strip_accents(text):
+    try:
+        text = unicode(text, 'utf-8')
+    except NameError: # unicode is a default on python 3 
+        pass
+
+    text = unicodedata.normalize('NFD', text)\
+           .encode('ascii', 'ignore')\
+           .decode("utf-8")
+
+    return str(text)
 
 
 def get_players(req):
@@ -14,20 +30,25 @@ def get_players(req):
 
     for player in data['athletes']:
 
-        player_name = player['displayName']
+        player_name = player.get('displayName')
+        player_name = strip_accents(player_name)
         player_number = player.get('jersey')
 
-        position = player['position']
+        position = player.get('position')
 
         for p in position:
             player_position = position.get('name')
 
-        players = {}
-        players['name'] = player_name
-        players['number'] = player_number
-        players['position'] = player_position
+        players = []
+        players.append(player_name)
+        players.append(player_number)
+        players.append(player_position)
 
         roster.append(players)
+    
+    for player in roster:
+        team = data['team'].get('abbreviation')
+        player.append(team)
 
     data = json.dumps(roster, indent=4)
     return data
@@ -59,22 +80,9 @@ def get_teams(req):
 
     teams_list = list(zip(abbreviations, names, primary_colors, secondary_colors))
     
-    teams = []
-    i = 0
-
-    for team in teams_list:
-        team_dict = {}
-
-        team_dict['abbreviation'] = teams_list[i][0]
-        team_dict['name'] = teams_list[i][1]
-        team_dict['primary_color'] = teams_list[i][2]
-        team_dict['secondary_color'] = teams_list[i][3]
-        teams.append(team_dict)
-
-        i += 1
-
-    data = json.dumps(teams, indent=4)
+    data = json.dumps(teams_list, indent=4)
     return data
+
 
 def get_matches(req):
     response = requests.get(req)
@@ -83,3 +91,53 @@ def get_matches(req):
         data = response.json()
     else:
         None
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# def seed_teams():
+#     conn = psycopg2.connect(
+#         """
+#         dbname=soccerapp_db user=postgres host=localhost port=5432
+#         """
+#     )
+
+#     conn.set_session(autocommit=True)
+#     cur = conn.cursor()
+
+#     team_data = get_teams('http://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/teams')
+
+#     for team in team_data:
+#         cur.execute(
+#             f"""
+#             INSERT INTO teams_team (abbreviation, name, primary_color, secondary_color)
+#             VALUES ('{team[0]}', '{team[1]}', '{team[2]}', '{team[3]}')
+#             """
+#         )
