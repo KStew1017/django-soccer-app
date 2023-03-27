@@ -2,7 +2,7 @@ version: "3.8"
 services:
   web:
     build: ./app
-    command: python manage.py runserver 0.0.0.0:8000
+    # command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./app/:/usr/src/app/
     restart: always
@@ -32,7 +32,7 @@ services:
       volumes:
           - ./data:/data
           - ./data/misc/django_init.sql:/docker-entrypoint-initdb.d/1-django-init.sql
-          - soccer_app_vol:/var/lib/postgresql/data
+          # - soccer_app_vol:/var/lib/postgresql/data
 
   pgadmin:
       container_name: pgadmin_container
@@ -49,5 +49,5 @@ services:
       depends_on:
           - pg
 
-volumes:
-  soccer_app_vol:
+# volumes:
+#   soccer_app_vol:

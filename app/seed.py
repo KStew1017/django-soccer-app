@@ -50,7 +50,6 @@ def get_players(req):
         team = data['team'].get('abbreviation')
         player.append(team)
 
-    data = json.dumps(roster, indent=4)
     return data
 
 
@@ -78,10 +77,16 @@ def get_teams(req):
     secondary_colors = map(get_secondary_color, data['sports'][0]['leagues'][0]['teams'])
     secondary_colors = list(secondary_colors)
 
-    teams_list = list(zip(abbreviations, names, primary_colors, secondary_colors))
+    teams_list = []
+    for i in range(len(abbreviations)):
+        team = []
+        team.append(abbreviations[i])
+        team.append(names[i])
+        team.append(primary_colors[i])
+        team.append(secondary_colors[i])
+        teams_list.append(team)
     
-    data = json.dumps(teams_list, indent=4)
-    return data
+    return teams_list
 
 
 def get_matches(req):
@@ -92,52 +97,25 @@ def get_matches(req):
     else:
         None
     
-    
 
+def seed_teams():
+    conn = psycopg2.connect(
+        """
+        dbname=soccerapp_db user=postgres host=localhost port=5432
+        """
+    )
 
+    conn.set_session(autocommit=True)
+    cur = conn.cursor()
 
+    team_data = get_teams('http://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/teams')
 
+    for team in team_data:
+        cur.execute(
+            f"""
+            INSERT INTO teams_team (abbreviation, name, primary_color, secondary_color)
+            VALUES ('{team[0]}', '{team[1]}', '{team[2]}', '{team[3]}')
+            """
+        )
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# def seed_teams():
-#     conn = psycopg2.connect(
-#         """
-#         dbname=soccerapp_db user=postgres host=localhost port=5432
-#         """
-#     )
-
-#     conn.set_session(autocommit=True)
-#     cur = conn.cursor()
-
-#     team_data = get_teams('http://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/teams')
-
-#     for team in team_data:
-#         cur.execute(
-#             f"""
-#             INSERT INTO teams_team (abbreviation, name, primary_color, secondary_color)
-#             VALUES ('{team[0]}', '{team[1]}', '{team[2]}', '{team[3]}')
-#             """
-#         )
+seed_teams()
