@@ -24,6 +24,5 @@ urlpatterns = [
     path('', views.HomePage),
     path('players/', include('players.urls')),
     path('matches/', include('matches.urls')),
-    path('teams/', include('teams.urls')),
-    path('results/', include('results.urls'))
+    path('teams/', include('teams.urls'))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

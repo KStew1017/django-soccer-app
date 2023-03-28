@@ -108,55 +108,63 @@ def get_matches(req):
         location = match.get('competitions')[0]['venue']['fullName']
         matchup = match.get('shortName')
         home_team = match.get('competitions')[0]['competitors'][0]['team']['abbreviation']
-        home_team_form = match.get('competitions')[0]['competitors'][0]['form']
+        home_team_goals = match.get('competitions')[0]['competitors'][0]['score']
         away_team = match.get('competitions')[0]['competitors'][1]['team']['abbreviation']
-        away_team_form = match.get('competitions')[0]['competitors'][1]['form']
+        away_team_goals = match.get('competitions')[0]['competitors'][1]['score']
         competition_stage = match.get('season')['slug']
+        if match.get('competitions')[0]['competitors'][0]['winner'] is True:
+            winner = match.get('competitions')[0]['competitors'][0]['team']['abbreviation']
+        elif match.get('competitions')[0]['competitors'][1]['winner'] is True:
+            winner = match.get('competitions')[0]['competitors'][1]['team']['abbreviation']
+        else:
+            winner = 'draw'
+
 
         match_data = []
         match_data.append(date)
         match_data.append(location)
         match_data.append(matchup)
-        match_data.append(home_team)
-        match_data.append(home_team_form)
-        match_data.append(away_team)
-        match_data.append(away_team_form)
         match_data.append(competition_stage)
+        match_data.append(home_team)
+        match_data.append(away_team)
+        match_data.append(home_team_goals)
+        match_data.append(away_team_goals)
+        match_data.append(winner)
 
         matches.append(match_data)
 
     return matches
 
 
-def get_results(req):
-    response = requests.get(req)
+# def get_results(req):
+#     response = requests.get(req)
 
-    if (response and response.status_code) == 200:
-        data = response.json()
-    else:
-        None
+#     if (response and response.status_code) == 200:
+#         data = response.json()
+#     else:
+#         None
     
-    results = []
+#     results = []
 
-    for result in data['events']:
-        home_team_goals = result.get('competitions')[0]['competitors'][0]['score']
-        away_team_goals = result.get('competitions')[0]['competitors'][1]['score']
+#     for result in data['events']:
+#         home_team_goals = result.get('competitions')[0]['competitors'][0]['score']
+#         away_team_goals = result.get('competitions')[0]['competitors'][1]['score']
         
-        if result.get('competitions')[0]['competitors'][0]['winner'] == True:
-            winner = result.get('competitions')[0]['competitors'][0]['team']['abbreviation']
-        elif result.get('competitions')[0]['competitors'][1]['winner'] == True:
-            winner = result.get('competitions')[0]['competitors'][1]['team']['abbreviation']
-        else:
-            winner = 'draw'
+#         if result.get('competitions')[0]['competitors'][0]['winner'] == True:
+#             winner = result.get('competitions')[0]['competitors'][0]['team']['abbreviation']
+#         elif result.get('competitions')[0]['competitors'][1]['winner'] == True:
+#             winner = result.get('competitions')[0]['competitors'][1]['team']['abbreviation']
+#         else:
+#             winner = 'draw'
         
-        result_data = []
-        result_data.append(home_team_goals)
-        result_data.append(away_team_goals)
-        result_data.append(winner)
+#         result_data = []
+#         result_data.append(home_team_goals)
+#         result_data.append(away_team_goals)
+#         result_data.append(winner)
 
-        results.append(result_data)
+#         results.append(result_data)
 
-    return results
+#     return results
 
 
 def get_team_ids(req):
@@ -175,7 +183,6 @@ def get_team_ids(req):
 
     return team_ids
 
-# Seed functions
 
 def match_dates():
     matchday1 = '20220906-20220907'
@@ -210,6 +217,7 @@ def match_dates():
 
     return matchdays
 
+# Seed functions
 
 def seed_teams():
     conn = psycopg2.connect(
@@ -274,8 +282,8 @@ def seed_matches():
         for match in match_data:
             cur.execute(
                 f"""
-                INSERT INTO matches_match (date, location, matchup, home_team_id, away_team_id, competition_stage, )
-                VALUES ('{match[0]}', '{match[1]}', '{match[2]}', '{match[3]}', '{match[4]}', '{match[5]}')
+                INSERT INTO matches_match (date, location, matchup, competition_stage, home_team_id, away_team_id, home_team_goals, away_team_goals, winner)
+                VALUES ('{match[0]}', '{match[1]}', '{match[2]}', '{match[3]}', '{match[4]}', '{match[5]}', '{match[6]}', '{match[7]}', '{match[8]}')
                 """
             )
 
