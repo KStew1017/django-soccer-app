@@ -1,10 +1,10 @@
 # Soccer Match Application
 
-This Django python application will keep track of soccer matches, including information on when and where it will be played, and who will be playing.
+This Django python application keeps track of soccer matches in the 2022-2023 Champions League, including information on when and where it will be played, and who will be playing.
 
-Along with specific match information, there will be an option to view teams individual pages and see things like rosters, records, etc.
+Along with specific match information, there will be an option to view teams individual pages and see their rosters.
 
-Data will be gathered from a postgres database and displayed onto to page.
+The postgres database used for this application has been seeded with data from [ESPN's hidden API endpoints](https://gist.github.com/akeaswaran/b48b02f1c94f873c6655e7129910fc3b), found courtesy of [Akshay Easwaran](https://github.com/akeaswaran).
 
 ---
 

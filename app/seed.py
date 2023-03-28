@@ -13,7 +13,7 @@ import unicodedata
 #
 ### debug ###
 
-#API functions
+############## API REQUESTS ##############
 
 def strip_accents(text):
     try:
@@ -104,7 +104,7 @@ def get_matches(req):
     matches = []
 
     for match in data['events']:
-        date = match.get('date')
+        date_time = match.get('date')
         location = match.get('competitions')[0]['venue']['fullName']
         matchup = match.get('shortName')
         home_team = match.get('competitions')[0]['competitors'][0]['team']['abbreviation']
@@ -121,7 +121,7 @@ def get_matches(req):
 
 
         match_data = []
-        match_data.append(date)
+        match_data.append(date_time)
         match_data.append(location)
         match_data.append(matchup)
         match_data.append(competition_stage)
@@ -134,37 +134,6 @@ def get_matches(req):
         matches.append(match_data)
 
     return matches
-
-
-# def get_results(req):
-#     response = requests.get(req)
-
-#     if (response and response.status_code) == 200:
-#         data = response.json()
-#     else:
-#         None
-    
-#     results = []
-
-#     for result in data['events']:
-#         home_team_goals = result.get('competitions')[0]['competitors'][0]['score']
-#         away_team_goals = result.get('competitions')[0]['competitors'][1]['score']
-        
-#         if result.get('competitions')[0]['competitors'][0]['winner'] == True:
-#             winner = result.get('competitions')[0]['competitors'][0]['team']['abbreviation']
-#         elif result.get('competitions')[0]['competitors'][1]['winner'] == True:
-#             winner = result.get('competitions')[0]['competitors'][1]['team']['abbreviation']
-#         else:
-#             winner = 'draw'
-        
-#         result_data = []
-#         result_data.append(home_team_goals)
-#         result_data.append(away_team_goals)
-#         result_data.append(winner)
-
-#         results.append(result_data)
-
-#     return results
 
 
 def get_team_ids(req):
@@ -217,7 +186,7 @@ def match_dates():
 
     return matchdays
 
-# Seed functions
+############## SEED FUNCTIONS ##############
 
 def seed_teams():
     conn = psycopg2.connect(
@@ -282,39 +251,12 @@ def seed_matches():
         for match in match_data:
             cur.execute(
                 f"""
-                INSERT INTO matches_match (date, location, matchup, competition_stage, home_team_id, away_team_id, home_team_goals, away_team_goals, winner)
+                INSERT INTO matches_match (date_time, location, matchup, competition_stage, home_team_id, away_team_id, home_team_goals, away_team_goals, winner)
                 VALUES ('{match[0]}', '{match[1]}', '{match[2]}', '{match[3]}', '{match[4]}', '{match[5]}', '{match[6]}', '{match[7]}', '{match[8]}')
                 """
             )
 
 
-# def seed_results():
-#     conn = psycopg2.connect(
-#         """
-#         dbname=soccerapp_db user=postgres host=pg port=5432
-#         """
-#     )
-
-#     conn.set_session(autocommit=True)
-#     cur = conn.cursor()
-
-#     matchdays = match_dates()
-
-#     for matchday in matchdays:
-#         result_data = get_results(f'http://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard?dates={matchday}')
-
-#         i = 0
-#         for result in result_data:
-#             cur.execute(
-#                 f"""
-#                 INSERT INTO results_result (match, home_team_goals, away_team_goals, winner)
-#                 VALUES ('{i}', '{result[0]}', '{result[1]}', '{result[2]}')
-#                 """
-#             )
-#             i += 1
-
-
 seed_teams()
 seed_players()
 seed_matches()
-# seed_results()
