@@ -17,4 +17,4 @@ WORKDIR /app
 COPY . /app
 
 RUN chmod +x /app/docker-entrypoint.sh
-CMD ["/app/docker-entrypoint.sh"]
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
