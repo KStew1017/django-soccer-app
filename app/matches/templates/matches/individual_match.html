@@ -1,0 +1,22 @@
+{% extends "base.html" %} {% load static %}
+{% block match_content %}
+<div id="matches">
+    <h1 id="header">Matches</h1>
+    {% for match in matches %}
+    <ul id="matches_list">
+        <li>{{ match.matchup }}
+            <ul>
+                <li>Date: {{ match.date_time }}</li>
+                <li>Location: {{ match.location }}</li>
+                <li>Competition Stage: {{ match.competition_stage }}</li>
+                <li>Home Team: {{ match.home_team }}</li>
+                <li>Home Team Goals: {{ match.home_team_goals }}</li>
+                <li>Away Team: {{ match.away_team }}</li>
+                <li>Away Team Goals: {{ match.away_team_goals }}</li>
+                <li>Winner: {{ match.winner }}</li>
+            </ul>
+        </li>
+    </ul>
+    {% endfor %}
+</div>
+{% endblock %}

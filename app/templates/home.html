@@ -1,7 +1,12 @@
 {% extends "base.html" %} {% load static %}
-<!-- {% block team_content %}
+
+{% block main_header %}
+<h1>UEFA Champions League</h1>
+{% endblock %}
+
+{% block team_content %}
 <div>
-    <h1>Teams</h1>
+    <h2>Teams</h2>
     {% for team in teams %}
     <ul>
         <li>{{ team.name }}
@@ -14,13 +19,13 @@
     </ul>
     {% endfor %}
 </div>
-{% endblock %} -->
+{% endblock %}
 
 {% block player_content %}
-<div id="players">
-    <h1 id="header">Players</h1>
+<div>
+    <h2>Players</h2>
     {% for player in players %}
-    <ul id="players_list">
+    <ul>
         <li>{{ player.name }}
             <ul>
                 <li>Number: {{ player.number }}</li>
@@ -33,9 +38,9 @@
 </div>
 {% endblock %}
 
-<!-- {% block match_content %}
+{% block match_content %}
 <div>
-    <h1>Matches</h1>
+    <h2>Matches</h2>
     {% for match in matches %}
     <ul>
         <li>{{ match.matchup }}
@@ -53,4 +58,4 @@
     </ul>
     {% endfor %}
 </div>
-{% endblock %} -->
+{% endblock %}

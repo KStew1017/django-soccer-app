@@ -1,9 +1,9 @@
 {% extends "base.html" %} {% load static %}
 {% block team_content %}
-<div id="teams">
-    <h1 id="header">Teams</h1>
+<div>
+    <h1>Teams</h1>
     {% for team in teams %}
-    <ul id="teams_list">
+    <ul>
         <li>{{ team.name }}
             <ul>
                 <li>Location: {{ team.abbreviation }}</li>

@@ -10,11 +10,6 @@ from matches.serializer import MatchSerializer
 from rest_framework.decorators import api_view
 
 
-def index(request):
-    print("Here")
-    queryset = Match.objects.all()
-    return render(request, 'matches/index.html', {'matches': queryset})
-
 class index(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'matches/index.html'
@@ -23,15 +18,14 @@ class index(APIView):
         queryset = Match.objects.all()
         return Response({'matches': queryset})
 
-class list_all_matches(APIView):
+class individual_match(APIView):
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'matches/match_list.html'
+    template_name = 'matches/individual_match.html'
 
-    def get(self, request):
-        queryset = Match.objects.all()
+    def get(self, request, id):
+        queryset = Match.objects.filter(id=id)
         return Response({'matches': queryset})
 
-# Create your views here.
 @api_view(['GET', 'POST', 'DELETE'])
 def matches_list(request):
     if request.method == 'GET':
@@ -57,7 +51,7 @@ def matches_list(request):
         )
 
 @api_view(['GET', 'DELETE', 'PATCH'])
-def individual_match(request, id):
+def individual_match_api(request, id):
     try:
         match = Match.objects.get(pk=id)
     except Match.DoesNotExist:

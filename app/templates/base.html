@@ -4,13 +4,67 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <!-- {% load static %} -->
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"> -->
     <title>UEFA Champions League</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #00080e;
+            background-image: url("/static/images/stadium.jpg");      
+            background-repeat: no-repeat;
+            color: #3426fb;
+        }
+
+        .navbar-list ul {
+            list-style: none;
+            background: #d12626;
+            padding: 0;
+            margin: 0;
+            width: fit-content;
+            width: -moz-fit-content;
+            text-align: center;
+            border-radius: 100px;
+        }
+
+        .navbar-list li {
+            display: inline-block;
+            font-size: 50px;
+        }
+
+        .navbar-list li:hover {
+            background: #f8f8f8;
+        }
+
+        .navbar-list a {
+            text-decoration: none;
+            color: #ffffff;
+            width: justify;
+            display: block;
+            padding: 50px;
+            margin: 0px 100px;
+        }
+
+
+
+    </style>
 </head>
 <body>
-    <!-- <div>{% block team_content %}{% endblock %}</div> -->
-    <div>{% block player_content %}{% endblock %}</div>
-    <!-- <div>{% block match_content %}{% endblock %}</div> -->
+    <nav class="navbar">
+        <div class="navbar-list">
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'teams' %}">Teams</a></li>
+                <li><a href="{% url 'matches' %}">Matches</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- {% block main_navbar %}{% endblock %}
+    {% block main_header %}{% endblock %}
+    {% block team_content %}{% endblock %}
+    {% block player_content %}{% endblock %}
+    {% block match_content %}{% endblock %} -->
 </body>
 </html>
