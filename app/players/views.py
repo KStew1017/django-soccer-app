@@ -10,10 +10,13 @@ from players.serializer import PlayerSerializer
 from rest_framework.decorators import api_view
 
 
-def index(request):
-    print("Here")
-    queryset = Player.objects.all()
-    return render(request, 'players/index.html', {'players': queryset})
+class roster(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'players/index.html'
+
+    def get(self, request, team):
+        queryset = Player.objects.filter(team=team)
+        return Response({'players': queryset})
 
 class index(APIView):
     renderer_classes = [TemplateHTMLRenderer]
@@ -23,15 +26,6 @@ class index(APIView):
         queryset = Player.objects.all()
         return Response({'players': queryset})
 
-class list_all_players(APIView):
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'players/player_list.html'
-
-    def get(self, request):
-        queryset = Player.objects.all()
-        return Response({'players': queryset})
-
-# Create your views here.
 @api_view(['GET', 'POST', 'DELETE'])
 def players_list(request):
     if request.method == 'GET':

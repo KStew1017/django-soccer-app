@@ -1,0 +1,23 @@
+#header {
+    background-color: blue;
+    font-size: 24px;
+}
+
+#players_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#players_list li {
+    margin-bottom: 10px;
+}
+
+#players_list li ul {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#players_list li ul li {
+    font-weight: bold;
+}

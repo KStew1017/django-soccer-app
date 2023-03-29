@@ -1,14 +1,15 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% load static %}
 {% block team_content %}
-<div>
-    <h1>Teams</h1>
+<div id="teams">
+    <h1 id="header">Teams</h1>
     {% for team in teams %}
-    <ul>
+    <ul id="teams_list">
         <li>{{ team.name }}
             <ul>
-                <li>Location: {{ team.location }}</li>
-                <li>Wins: {{ team.wins }}</li>
-                <li>Losses: {{ team.losses }}</li>
+                <li>Location: {{ team.abbreviation }}</li>
+                <li>Wins: {{ team.primary_color }}</li>
+                <li>Losses: {{ team.secondary_color }}</li>
+                <li>Logo: {{ team.logo_url }}</li>
             </ul>
         </li>
     </ul>

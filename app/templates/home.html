@@ -1,5 +1,5 @@
-{% extends "base.html" %}
-{% block team_content %}
+{% extends "base.html" %} {% load static %}
+<!-- {% block team_content %}
 <div>
     <h1>Teams</h1>
     {% for team in teams %}
@@ -14,13 +14,13 @@
     </ul>
     {% endfor %}
 </div>
-{% endblock %}
+{% endblock %} -->
 
 {% block player_content %}
-<div>
-    <h1>Players</h1>
+<div id="players">
+    <h1 id="header">Players</h1>
     {% for player in players %}
-    <ul>
+    <ul id="players_list">
         <li>{{ player.name }}
             <ul>
                 <li>Number: {{ player.number }}</li>
@@ -33,18 +33,24 @@
 </div>
 {% endblock %}
 
-{% block match_content %}
+<!-- {% block match_content %}
 <div>
     <h1>Matches</h1>
     {% for match in matches %}
     <ul>
-        <li>{{ match.away_team }} @ {{ match.home_team }}
+        <li>{{ match.matchup }}
             <ul>
                 <li>Date: {{ match.date_time }}</li>
                 <li>Location: {{ match.location }}</li>
+                <li>Competition Stage: {{ match.competition_stage }}</li>
+                <li>Home Team: {{ match.home_team }}</li>
+                <li>Home Team Goals: {{ match.home_team_goals }}</li>
+                <li>Away Team: {{ match.away_team }}</li>
+                <li>Away Team Goals: {{ match.away_team_goals }}</li>
+                <li>Winner: {{ match.winner }}</li>
             </ul>
         </li>
     </ul>
     {% endfor %}
 </div>
-{% endblock %}
+{% endblock %} -->
