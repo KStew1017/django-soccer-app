@@ -3,13 +3,14 @@ import json
 import psycopg2
 import time
 import unicodedata
+import datetime
 
 
 ### debug ###
 #
 # players = http://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/teams/382/roster
 # teams = http://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/teams
-# http://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard?dates=20220906-20220907
+# matches = http://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard?dates=20220906-20220907
 #
 ### debug ###
 
@@ -112,13 +113,32 @@ def get_matches(req):
         away_team = match.get('competitions')[0]['competitors'][1]['team']['abbreviation']
         away_team_goals = match.get('competitions')[0]['competitors'][1]['score']
         competition_stage = match.get('season')['slug']
+
+        if competition_stage == 'group-stage':
+            competition_stage = 'Group Stage'
+        elif competition_stage == 'round-of-16':
+            competition_stage = 'Round of 16'
+        elif competition_stage == 'quarterfinals':
+            competition_stage = 'Quarterfinals'
+        elif competition_stage == 'semifinals':
+            competition_stage = 'Semifinals'
+        elif competition_stage == 'finals':
+            competition_stage = 'Finals'
+        
         if match.get('competitions')[0]['competitors'][0]['winner'] is True:
             winner = match.get('competitions')[0]['competitors'][0]['team']['abbreviation']
         elif match.get('competitions')[0]['competitors'][1]['winner'] is True:
             winner = match.get('competitions')[0]['competitors'][1]['team']['abbreviation']
         else:
-            winner = 'draw'
+            winner = 'Draw'
 
+        date1 = datetime.datetime.utcnow()
+        date2 = date1.replace(microsecond=0, second=0)
+        date3 = date2.strftime('%Y-%m-%dT%H:%M:%S')
+        datetime_now = date3[:-3] + 'Z'
+
+        if date_time > datetime_now:
+            winner = 'TBD'
 
         match_data = []
         match_data.append(date_time)

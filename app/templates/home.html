@@ -39,23 +39,23 @@
 {% endblock %}
 
 {% block match_content %}
-<div>
-    <h2>Matches</h2>
-    {% for match in matches %}
-    <ul>
-        <li>{{ match.matchup }}
-            <ul>
-                <li>Date: {{ match.date_time }}</li>
-                <li>Location: {{ match.location }}</li>
-                <li>Competition Stage: {{ match.competition_stage }}</li>
-                <li>Home Team: {{ match.home_team }}</li>
-                <li>Home Team Goals: {{ match.home_team_goals }}</li>
-                <li>Away Team: {{ match.away_team }}</li>
-                <li>Away Team Goals: {{ match.away_team_goals }}</li>
-                <li>Winner: {{ match.winner }}</li>
-            </ul>
-        </li>
-    </ul>
-    {% endfor %}
+{% for match in matches %}
+<div class="match-card">
+    <li>
+        <div class="match-header">
+            <span class="match-header-item" id="matchup">{{ match.matchup }}</span>
+            <span class="match-header-item">{{ match.date_time }}</span>
+            <span class="match-header-item">{{ match.competition_stage }}</span>
+        </div>
+        <ul class="match-content">
+            <li class="match-item" id="match-score"><span>{{ match.away_team_goals }}</span> - <span>{{ match.home_team_goals }}</span></li>
+            {% if match.date_time > datetime.now %}
+                <li class="match-item">Winner: TBD</li>
+            {% else %}
+                <li class="match-item">Winner: {{ match.winner }}</li>
+            {% endif %}
+        </ul>
+    </li>
 </div>
+{% endfor %}
 {% endblock %}

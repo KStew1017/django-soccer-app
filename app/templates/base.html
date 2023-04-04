@@ -5,66 +5,175 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- {% load static %} -->
-    <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"> -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <title>UEFA Champions League</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #00080e;
-            background-image: url("/static/images/stadium.jpg");      
-            background-repeat: no-repeat;
-            color: #3426fb;
-        }
-
-        .navbar-list ul {
-            list-style: none;
-            background: #d12626;
-            padding: 0;
+        * {
             margin: 0;
-            width: fit-content;
-            width: -moz-fit-content;
-            text-align: center;
-            border-radius: 100px;
-        }
-
-        .navbar-list li {
-            display: inline-block;
-            font-size: 50px;
-        }
-
-        .navbar-list li:hover {
-            background: #f8f8f8;
-        }
-
-        .navbar-list a {
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
             text-decoration: none;
-            color: #ffffff;
-            width: justify;
-            display: block;
-            padding: 50px;
-            margin: 0px 100px;
+            list-style: none;
+            color: #f5f5f5;
         }
 
+        body {
+            background-color: #22333b;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-blend-mode: multiply;
+        }
 
+        .main-navbar {
+            position: relative;
+            width: 100%;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
 
+        .main-navbar ul {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .main-navbar ul li {
+            width: 33.33%;
+            text-align: center;
+            padding: 20px 0px;
+        }
+
+        .main-navbar ul li a {
+            color: #a8a8a8;
+            font-size: 20px;
+            font-weight: 500;
+            align-content: center;
+            text-align: center;
+        }
+
+        .main-navbar ul li a:hover {
+            color: #f5f5f5;
+            
+        }
+        
+        .main-navbar ul li a.active {
+            color: #f5f5f5;
+        }
+
+        .main-header {
+            position: relative;
+            text-align: center;
+            color: #f5f5f5;
+            padding: 50px 0px;
+            font-size: 24px;
+        }
+
+        .body {
+            position: relative;
+        }
+
+        .column-group {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0px auto;
+        }
+
+        .column {
+            display: inline-block;
+            width: 50%;
+            text-align: center;
+            float: left;
+            max-height: 500px;
+            padding: 0px 0px;
+            padding-bottom: 100px;
+            overflow-y: scroll;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), color-stop(75%, rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+            mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), color-stop(75%, rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+        }
+
+        .column::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .column::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .column::-webkit-scrollbar-thumb {
+            border-radius: 5px;
+            background-color: #1b292f;
+        }
+
+        .match-card {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 500px;
+            margin: 0px auto;
+            padding: 20px;
+            background-color: #1b292f;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .match-header {
+            padding: 10px 0px;
+        }
+
+        .match-header-item {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        #matchup {
+            font-size: 24px;
+            font-weight: 500;
+        }
+
+        #match-score {
+            font-size: 48px;
+            font-weight: 500;
+        }
+
+        .match-item {
+            font-size: 12px;
+            padding:10px 0px;
+        }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="navbar-list">
-            <ul>
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'teams' %}">Teams</a></li>
-                <li><a href="{% url 'matches' %}">Matches</a></li>
-            </ul>
-        </div>
+    <nav class="main-navbar">
+        <ul>
+            <li><a class="active" href="{% url 'home' %}">Home</a></li>
+            <li><a class="" href="{% url 'teams' %}">Teams</a></li>
+            <li><a class="" href="{% url 'matches' %}">Matches</a></li>
+        </ul>
     </nav>
-    <!-- {% block main_navbar %}{% endblock %}
-    {% block main_header %}{% endblock %}
-    {% block team_content %}{% endblock %}
-    {% block player_content %}{% endblock %}
-    {% block match_content %}{% endblock %} -->
+    <div class="main-header">
+        <h1>UEFA Champions League</h1>
+    </div>
+    <div class="body">
+        <div class="column-group">
+            <span class="column">
+                {% block match_content %}{% endblock %}
+            </span>
+        </div>
+    </div>
 </body>
 </html>
