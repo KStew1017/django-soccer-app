@@ -7,6 +7,7 @@
     font-family: 'Poppins', sans-serif;
     text-decoration: none;
     list-style: none;
+    color: #f5f5f5;
 }
 
 body {
@@ -17,7 +18,7 @@ body {
 }
 
 .main-navbar {
-    position: fixed;
+    position: relative;
     width: 100%;
     align-items: center;
     display: flex;
@@ -32,7 +33,9 @@ body {
 }
 
 .main-navbar ul li {
-    margin: 20px auto;
+    width: 33.33%;
+    text-align: center;
+    padding: 20px 0px;
 }
 
 .main-navbar ul li a {
@@ -50,4 +53,95 @@ body {
 
 .main-navbar ul li a.active {
     color: #f5f5f5;
+}
+
+.main-header {
+    position: relative;
+    text-align: center;
+    color: #f5f5f5;
+    padding: 50px 0px;
+    font-size: 24px;
+}
+
+.body {
+    position: relative;
+}
+
+.column-group {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0px auto;
+}
+
+.column {
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+    float: left;
+    max-height: 500px;
+    padding: 0px 0px;
+    padding-bottom: 100px;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), color-stop(75%, rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+    mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), color-stop(75%, rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+}
+
+.column::-webkit-scrollbar {
+    width: 10px;
+}
+
+.column::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.column::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #1b292f;
+}
+
+.match-card {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    margin: 0px auto;
+    padding: 20px;
+    background-color: #1b292f;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.match-header {
+    padding: 10px 0px;
+}
+
+.match-header-item {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+#matchup {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+#match-score {
+    font-size: 48px;
+    font-weight: 500;
+}
+
+.match-item {
+    font-size: 12px;
+    padding:10px 0px;
 }
