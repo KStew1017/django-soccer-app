@@ -1,61 +1,22 @@
-{% extends "base.html" %} {% load static %}
+{% extends "base.html" %}
 
-{% block main_header %}
-<h1>UEFA Champions League</h1>
-{% endblock %}
-
-{% block team_content %}
-<div>
-    <h2>Teams</h2>
-    {% for team in teams %}
-    <ul>
-        <li>{{ team.name }}
-            <ul>
-                <li>Abbreviation: {{ team.abbreviation }}</li>
-                <li>Primary Color: {{ team.primary_color }}</li>
-                <li>Secondary Color: {{ team.secondary_color }}</li>
-            </ul>
-        </li>
-    </ul>
-    {% endfor %}
-</div>
-{% endblock %}
-
-{% block player_content %}
-<div>
-    <h2>Players</h2>
-    {% for player in players %}
-    <ul>
-        <li>{{ player.name }}
-            <ul>
-                <li>Number: {{ player.number }}</li>
-                <li>Position: {{ player.position }}</li>
-                <li>Team: {{ player.team }}</li>
-            </ul>
-        </li>
-    </ul>
-    {% endfor %}
-</div>
-{% endblock %}
-
-{% block match_content %}
+{% block match_content %} {% load static %}
 {% for match in matches %}
-<div class="match-card">
-    <li>
+<div class="match-card" style="background: linear-gradient(to right, #{{ match.away_team_color }}33, #{{ match.home_team_color }}33);">
+    <img class="away-team-logo" alt="away team logo" src="{{ match.away_team_logo }}">
+    <li class="match-content">
         <div class="match-header">
             <span class="match-header-item" id="matchup">{{ match.matchup }}</span>
+            <span class="match-header-item">{{ match.location }}</span>
             <span class="match-header-item">{{ match.date_time }}</span>
             <span class="match-header-item">{{ match.competition_stage }}</span>
         </div>
-        <ul class="match-content">
+        <ul class="match-result">
             <li class="match-item" id="match-score"><span>{{ match.away_team_goals }}</span> - <span>{{ match.home_team_goals }}</span></li>
-            {% if match.date_time > datetime.now %}
-                <li class="match-item">Winner: TBD</li>
-            {% else %}
-                <li class="match-item">Winner: {{ match.winner }}</li>
-            {% endif %}
+            <li class="match-item">Winner: {{ match.winner }}</li>
         </ul>
     </li>
+    <img class="home-team-logo" alt=" home team logo" src="{{ match.home_team_logo }}">
 </div>
 {% endfor %}
 {% endblock %}

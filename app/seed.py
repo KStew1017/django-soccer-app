@@ -109,8 +109,12 @@ def get_matches(req):
         location = match.get('competitions')[0]['venue']['fullName']
         matchup = match.get('shortName')
         home_team = match.get('competitions')[0]['competitors'][0]['team']['abbreviation']
+        home_team_logo = match.get('competitions')[0]['competitors'][0]['team']['logo']
+        home_team_color = match.get('competitions')[0]['competitors'][0]['team']['color']
         home_team_goals = match.get('competitions')[0]['competitors'][0]['score']
         away_team = match.get('competitions')[0]['competitors'][1]['team']['abbreviation']
+        away_team_logo = match.get('competitions')[0]['competitors'][1]['team']['logo']
+        away_team_color = match.get('competitions')[0]['competitors'][1]['team']['color']
         away_team_goals = match.get('competitions')[0]['competitors'][1]['score']
         competition_stage = match.get('season')['slug']
 
@@ -149,6 +153,10 @@ def get_matches(req):
         match_data.append(away_team)
         match_data.append(home_team_goals)
         match_data.append(away_team_goals)
+        match_data.append(home_team_logo)
+        match_data.append(away_team_logo)
+        match_data.append(home_team_color)
+        match_data.append(away_team_color)
         match_data.append(winner)
 
         matches.append(match_data)
@@ -271,8 +279,8 @@ def seed_matches():
         for match in match_data:
             cur.execute(
                 f"""
-                INSERT INTO matches_match (date_time, location, matchup, competition_stage, home_team_id, away_team_id, home_team_goals, away_team_goals, winner)
-                VALUES ('{match[0]}', '{match[1]}', '{match[2]}', '{match[3]}', '{match[4]}', '{match[5]}', '{match[6]}', '{match[7]}', '{match[8]}')
+                INSERT INTO matches_match (date_time, location, matchup, competition_stage, home_team_id, away_team_id, home_team_goals, away_team_goals, home_team_logo, away_team_logo, home_team_color, away_team_color, winner)
+                VALUES ('{match[0]}', '{match[1]}', '{match[2]}', '{match[3]}', '{match[4]}', '{match[5]}', '{match[6]}', '{match[7]}', '{match[8]}', '{match[9]}', '{match[10]}', '{match[11]}', '{match[12]}')
                 """
             )
 
