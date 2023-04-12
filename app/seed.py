@@ -44,16 +44,35 @@ def get_players(req):
         player_name = player.get('displayName')
         player_name = strip_accents(player_name)
         player_name = player_name.replace("'", "''")
-        if player.get('jersey') == None:
+        if player.get('jersey') is None:
             player_number = 0
         else:
             player_number = player.get('jersey')
         player_position = player.get('position')['name']
+        player_nationality = player.get('citizenship')
+        player_age = player.get('age')
+
+        if player.get('height') is None:
+            player_height = 'No Data'
+        else:
+            player_height_float = player.get('height')
+            player_height_feet = int(player_height_float // 12)
+            player_height_inches = int(player_height_float % 12)
+            player_height = str(player_height_feet) + ' ft ' + str(player_height_inches) + ' in'
+
+        if player.get('weight') is None:
+            player_weight = 'No Data'
+        else:
+            player_weight = player.get('displayWeight')
 
         players = []
         players.append(player_name)
         players.append(player_number)
         players.append(player_position)
+        players.append(player_nationality)
+        players.append(player_age)
+        players.append(player_height)
+        players.append(player_weight)
 
         roster.append(players)
     
@@ -137,12 +156,15 @@ def get_matches(req):
             winner = 'Draw'
 
         date1 = datetime.datetime.utcnow()
-        date2 = date1.replace(microsecond=0, second=0)
+        date2 = date1.replace(microsecond=0, second=0, tzinfo=None)
         date3 = date2.strftime('%Y-%m-%dT%H:%M:%S')
         datetime_now = date3[:-3] + 'Z'
 
         if date_time > datetime_now:
             winner = 'TBD'
+        
+        home_team_abbreviation = match.get('competitions')[0]['competitors'][0]['team']['abbreviation']
+        away_team_abbreviation = match.get('competitions')[0]['competitors'][1]['team']['abbreviation']
 
         match_data = []
         match_data.append(date_time)
@@ -158,6 +180,8 @@ def get_matches(req):
         match_data.append(home_team_color)
         match_data.append(away_team_color)
         match_data.append(winner)
+        match_data.append(home_team_abbreviation)
+        match_data.append(away_team_abbreviation)
 
         matches.append(match_data)
 
@@ -231,8 +255,20 @@ def seed_teams():
     for team in team_data:
         cur.execute(
             f"""
-            INSERT INTO teams_team (abbreviation, name, primary_color, secondary_color, logo_url)
-            VALUES ('{team[0]}', '{team[1]}', '{team[2]}', '{team[3]}', '{team[4]}')
+            INSERT INTO teams_team (
+                abbreviation,
+                name,
+                primary_color,
+                secondary_color,
+                logo_url
+                )
+            VALUES (
+                '{team[0]}',
+                '{team[1]}',
+                '{team[2]}',
+                '{team[3]}',
+                '{team[4]}'
+                )
             """
         )
 
@@ -255,8 +291,26 @@ def seed_players():
         for player in player_data:
             cur.execute(
                 f"""
-                INSERT INTO players_player (name, number, position, team)
-                VALUES ('{player[0]}', '{player[1]}', '{player[2]}', '{player[3]}')
+                INSERT INTO players_player (
+                    name,
+                    number,
+                    position,
+                    nationality,
+                    age,
+                    height,
+                    weight,
+                    team
+                    )
+                VALUES (
+                    '{player[0]}',
+                    '{player[1]}',
+                    '{player[2]}',
+                    '{player[3]}',
+                    '{player[4]}',
+                    '{player[5]}',
+                    '{player[6]}',
+                    '{player[7]}'
+                    )
                 """
             )
 
@@ -279,8 +333,39 @@ def seed_matches():
         for match in match_data:
             cur.execute(
                 f"""
-                INSERT INTO matches_match (date_time, location, matchup, competition_stage, home_team_id, away_team_id, home_team_goals, away_team_goals, home_team_logo, away_team_logo, home_team_color, away_team_color, winner)
-                VALUES ('{match[0]}', '{match[1]}', '{match[2]}', '{match[3]}', '{match[4]}', '{match[5]}', '{match[6]}', '{match[7]}', '{match[8]}', '{match[9]}', '{match[10]}', '{match[11]}', '{match[12]}')
+                INSERT INTO matches_match (
+                    date_time,
+                    location, matchup,
+                    competition_stage,
+                    home_team_id,
+                    away_team_id,
+                    home_team_goals,
+                    away_team_goals,
+                    home_team_logo,
+                    away_team_logo,
+                    home_team_color,
+                    away_team_color,
+                    winner,
+                    home_team_abbreviation,
+                    away_team_abbreviation
+                    )
+                VALUES (
+                    '{match[0]}',
+                    '{match[1]}',
+                    '{match[2]}',
+                    '{match[3]}',
+                    '{match[4]}',
+                    '{match[5]}',
+                    '{match[6]}',
+                    '{match[7]}',
+                    '{match[8]}',
+                    '{match[9]}',
+                    '{match[10]}',
+                    '{match[11]}',
+                    '{match[12]}',
+                    '{match[13]}',
+                    '{match[14]}'
+                    )
                 """
             )
 

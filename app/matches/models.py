@@ -16,6 +16,8 @@ class Match(models.Model):
     away_team_goals = models.PositiveSmallIntegerField(default=0)
     competition_stage = models.CharField(max_length=64, default='TBD')
     winner = models.CharField(max_length=64, default='draw')
+    home_team_abbreviation = models.CharField(max_length=3, default='TBD')
+    away_team_abbreviation = models.CharField(max_length=3, default='TBD')
     
     def __str__(self):
         return self.matchup

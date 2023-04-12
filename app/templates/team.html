@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/teampage.css' %}">
+    <title>{{ team.name }}</title>
+    <style>
+        /* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');        
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+            list-style: none;
+            color: #ffffff;
+        }
+
+        body {
+            --light-background: #22333b;
+            --dark-background: #1b292f;
+            --bright-text: #ffffff;
+            --dim-text: #a9a9a9;
+            background-color: var(--light-background);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-blend-mode: multiply;
+        }
+
+        .header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--dark-background);
+            margin: 50px auto 50px auto;
+            padding: 0px 100px 0px 50px;
+            width: 1000px;
+            border-radius: 25px;
+
+        }
+
+        .team-logo {
+            width: 250px;
+            height: 250px;
+            margin: 30px;
+        }
+
+        .team-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #team-name {
+            text-align: center;
+            font-size: 50px;
+            font-weight: 600;
+            max-width: 600px;
+        }
+
+        #team-abbreviation {
+            position: absolute;
+            opacity: 10%;
+            font-size: 220px;
+            font-weight: 700;
+        }
+
+        .player-table {
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+            margin: 0px auto 50px auto;
+            padding: 20px;
+            width: 1000px;
+            border-radius: 25px;
+            background-color: var(--dark-background);
+        }
+
+        thead {
+            padding: 10px;
+            font-size: 20px;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        tbody {
+            padding: 10px;
+            font-size: 20px;
+            font-weight: 400;
+            text-align: left;
+        }
+
+        tr {
+            font-size: 20px;
+            font-weight: 400;
+            text-align: center;
+        }
+
+        th, td {
+            width: auto;
+            padding: 10px 30px 10px 30px;
+        }
+
+        h2 {
+            font-size: 30px;
+            font-weight: 600;
+            margin: 10px auto 10px auto;
+            text-align: center;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: var(--light-background);
+        } */
+    </style>
+</head>
+<body>
+    <div class="header" style="background: linear-gradient(to bottom right, #{{ team.primary_color }}BF, #{{ team.secondary_color }}BF);">
+        <div>
+            <img class="team-logo" alt="team logo" src="{{ team.logo_url }}">
+        </div>
+        <div class="team-info">
+            <span id="team-name">{{ team.name }}</span>
+            <span id="team-abbreviation">{{ team.abbreviation }}</span>
+        </div>
+    </div>
+    <h2>Roster</h2>
+    <div class="player-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Number</th>
+                    <th>Age</th>
+                    <th>Height</th>
+                    <th>Weight</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for player in players %}
+                <tr>
+                    <td>{{ player.name }}</td>
+                    <td>{{ player.position }}</td>
+                    <td>{{ player.number }}</td>
+                    <td>{{ player.age }}</td>
+                    <td>{{ player.height }}</td>
+                    <td>{{ player.weight }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- <div class="header" style="background: linear-gradient(to bottom right, #{{ team.primary_color }}BF, #{{ team.secondary_color }}BF);">
+        <div>
+            <img class="team-logo" alt="team logo" src="https://a.espncdn.com/i/teamlogos/soccer/500/382.png">
+        </div>
+        <div class="team-info">
+            <span id="team-name">Manchester City</span>
+            <span id="team-abbreviation">MNC</span>
+        </div>
+    </div>
+    <div class="player-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Number</th>
+                    <th>Age</th>
+                    <th>Height</th>
+                    <th>Weight</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Ederson</td>
+                    <td>Goalkeeper</td>
+                    <td>31</td>
+                    <td>29</td>
+                    <td>6 ft 2 in</td>
+                    <td>190 lbs</td>
+                </tr>
+                <tr>
+                    <td>Ederson</td>
+                    <td>Goalkeeper</td>
+                    <td>31</td>
+                    <td>29</td>
+                    <td>6 ft 2 in</td>
+                    <td>190 lbs</td>
+                </tr>
+                <tr>
+                    <td>Ederson</td>
+                    <td>Goalkeeper</td>
+                    <td>31</td>
+                    <td>29</td>
+                    <td>6 ft 2 in</td>
+                    <td>190 lbs</td>
+                </tr>
+                <tr>
+                    <td>Ederson</td>
+                    <td>Goalkeeper</td>
+                    <td>31</td>
+                    <td>29</td>
+                    <td>6 ft 2 in</td>
+                    <td>190 lbs</td>
+                </tr>
+            </tbody>
+        </table>
+    </div> -->
+</body>
+</html>

@@ -1,18 +1,10 @@
 {% extends "base.html" %} {% load static %}
 {% block team_content %}
-<div>
-    <h1>Teams</h1>
-    {% for team in teams %}
-    <ul>
-        <li>{{ team.name }}
-            <ul>
-                <li>Location: {{ team.abbreviation }}</li>
-                <li>Wins: {{ team.primary_color }}</li>
-                <li>Losses: {{ team.secondary_color }}</li>
-                <li>Logo: {{ team.logo_url }}</li>
-            </ul>
-        </li>
-    </ul>
-    {% endfor %}
+{% for team in teams %}
+<div class="team-card" style="background: linear-gradient(to bottom right, #{{ team.primary_color }}80, #{{ team.secondary_color }}80);">
+    <a href=""><img class="team-logo" alt="team logo" src="{{ team.logo_url }}"></a>
+    <div class="team-abbreviation">{{ team.abbreviation }}</div>
+    <div class="team-name">{{ team.name }}</div>
 </div>
+{% endfor %}
 {% endblock %}

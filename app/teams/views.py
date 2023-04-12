@@ -10,9 +10,9 @@ from teams.serializer import TeamSerializer
 from rest_framework.decorators import api_view
 
 
-def index(request):
-    print("Here")
-    queryset = Team.objects.all()
+    
+def index(request, id):
+    queryset = Team.objects.get(pk=id)
     return render(request, 'teams/index.html', {'teams': queryset})
 
 class index(APIView):

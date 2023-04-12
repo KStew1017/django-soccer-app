@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');        
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    list-style: none;
+    color: #ffffff;
+}
+
+body {
+    --light-background: #22333b;
+    --dark-background: #1b292f;
+    --bright-text: #ffffff;
+    --dim-text: #a9a9a9;
+    background-color: var(--light-background);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: multiply;
+}
+
+.header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--dark-background);
+    margin: 50px auto 50px auto;
+    padding: 0px 100px 0px 50px;
+    width: 1000px;
+    border-radius: 25px;
+
+}
+
+.team-logo {
+    width: 250px;
+    height: 250px;
+    margin: 30px;
+}
+
+.team-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#team-name {
+    text-align: center;
+    font-size: 50px;
+    font-weight: 600;
+    max-width: 600px;
+}
+
+#team-abbreviation {
+    position: absolute;
+    opacity: 10%;
+    font-size: 220px;
+    font-weight: 700;
+}
+
+.player-table {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    margin: 0px auto 50px auto;
+    padding: 20px;
+    width: 1000px;
+    border-radius: 25px;
+    background-color: var(--dark-background);
+}
+
+thead {
+    padding: 10px;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: left;
+}
+
+tbody {
+    padding: 10px;
+    font-size: 20px;
+    font-weight: 400;
+    text-align: left;
+}
+
+tr {
+    font-size: 20px;
+    font-weight: 400;
+    text-align: center;
+}
+
+th, td {
+    width: auto;
+    padding: 10px 30px 10px 30px;
+}
+
+h2 {
+    font-size: 30px;
+    font-weight: 600;
+    margin: 10px auto 10px auto;
+    text-align: center;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: var(--light-background);
+}
