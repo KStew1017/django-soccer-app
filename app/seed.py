@@ -136,6 +136,38 @@ def get_matches(req):
         away_team_color = match.get('competitions')[0]['competitors'][1]['team']['color']
         away_team_goals = match.get('competitions')[0]['competitors'][1]['score']
         competition_stage = match.get('season')['slug']
+        home_team_name = match.get('competitions')[0]['competitors'][0]['team']['name']
+        home_team_name = strip_accents(home_team_name)
+        away_team_name = match.get('competitions')[0]['competitors'][1]['team']['name']
+        away_team_name = strip_accents(away_team_name)
+        home_team_recent_form = match.get('competitions')[0]['competitors'][0]['form']
+        away_team_recent_form = match.get('competitions')[0]['competitors'][1]['form']
+
+        try:
+            if match.get('competitions')[0]['competitors'][0]['records'][0]['summary'] is None:
+                home_team_champions_league_record = 'No Data'
+            else:
+                home_team_champions_league_record = match.get('competitions')[0]['competitors'][0]['records'][0]['summary']
+
+            if match.get('competitions')[0]['competitors'][1]['records'][0]['summary'] is None:
+                away_team_champions_league_record = 'No Data'
+            else:
+                away_team_champions_league_record = match.get('competitions')[0]['competitors'][1]['records'][0]['summary']
+        except:
+            home_team_champions_league_record = 'No Data'
+            away_team_champions_league_record = 'No Data'
+        
+        match_details = match.get('competitions')[0]['details']
+        home_team_scorers = []
+        away_team_scorers = []
+        for event in match_details:
+            if ('goal' in event.get('type')['text'].lower()) or ('penalty' in event.get('type')['text'].lower()):
+                if event.get('team')['id'] == match.get('competitions')[0]['competitors'][0]['id']:
+                    goal = event.get('athletesInvolved')[0]['shortName'] + ' (' + event.get('clock')['displayValue'].replace("'", "") + ')'
+                    home_team_scorers.append(goal)
+                elif event.get('team')['id'] == match.get('competitions')[0]['competitors'][1]['id']:
+                    goal = event.get('athletesInvolved')[0]['shortName'] + ' (' + event.get('clock')['displayValue'].replace("'", "") + ')'
+                    away_team_scorers.append(goal)
 
         if competition_stage == 'group-stage':
             competition_stage = 'Group Stage'
@@ -162,9 +194,6 @@ def get_matches(req):
 
         if date_time > datetime_now:
             winner = 'TBD'
-        
-        home_team_abbreviation = match.get('competitions')[0]['competitors'][0]['team']['abbreviation']
-        away_team_abbreviation = match.get('competitions')[0]['competitors'][1]['team']['abbreviation']
 
         match_data = []
         match_data.append(date_time)
@@ -180,8 +209,14 @@ def get_matches(req):
         match_data.append(home_team_color)
         match_data.append(away_team_color)
         match_data.append(winner)
-        match_data.append(home_team_abbreviation)
-        match_data.append(away_team_abbreviation)
+        match_data.append(home_team_name)
+        match_data.append(away_team_name)
+        match_data.append(home_team_recent_form)
+        match_data.append(away_team_recent_form)
+        match_data.append(home_team_champions_league_record)
+        match_data.append(away_team_champions_league_record)
+        match_data.append(home_team_scorers)
+        match_data.append(away_team_scorers)
 
         matches.append(match_data)
 
@@ -261,16 +296,17 @@ def seed_teams():
                 primary_color,
                 secondary_color,
                 logo_url
-                )
+            )
             VALUES (
                 '{team[0]}',
                 '{team[1]}',
                 '{team[2]}',
                 '{team[3]}',
                 '{team[4]}'
-                )
+            )
             """
         )
+
 
 
 def seed_players():
@@ -300,7 +336,7 @@ def seed_players():
                     height,
                     weight,
                     team
-                    )
+                )
                 VALUES (
                     '{player[0]}',
                     '{player[1]}',
@@ -310,7 +346,7 @@ def seed_players():
                     '{player[5]}',
                     '{player[6]}',
                     '{player[7]}'
-                    )
+                )
                 """
             )
 
@@ -332,7 +368,7 @@ def seed_matches():
 
         for match in match_data:
             cur.execute(
-                f"""
+                """
                 INSERT INTO matches_match (
                     date_time,
                     location, matchup,
@@ -346,28 +382,64 @@ def seed_matches():
                     home_team_color,
                     away_team_color,
                     winner,
-                    home_team_abbreviation,
-                    away_team_abbreviation
-                    )
+                    home_team_name,
+                    away_team_name,
+                    home_team_recent_form,
+                    away_team_recent_form,
+                    home_team_champions_league_record,
+                    away_team_champions_league_record,
+                    home_team_scorers,
+                    away_team_scorers
+                )
                 VALUES (
-                    '{match[0]}',
-                    '{match[1]}',
-                    '{match[2]}',
-                    '{match[3]}',
-                    '{match[4]}',
-                    '{match[5]}',
-                    '{match[6]}',
-                    '{match[7]}',
-                    '{match[8]}',
-                    '{match[9]}',
-                    '{match[10]}',
-                    '{match[11]}',
-                    '{match[12]}',
-                    '{match[13]}',
-                    '{match[14]}'
-                    )
-                """
+                    %(date_time)s,
+                    %(location)s,
+                    %(matchup)s,
+                    %(competition_stage)s,
+                    %(home_team_id)s,
+                    %(away_team_id)s,
+                    %(home_team_goals)s,
+                    %(away_team_goals)s,
+                    %(home_team_logo)s,
+                    %(away_team_logo)s,
+                    %(home_team_color)s,
+                    %(away_team_color)s,
+                    %(winner)s,
+                    %(home_team_name)s,
+                    %(away_team_name)s,
+                    %(home_team_recent_form)s,
+                    %(away_team_recent_form)s,
+                    %(home_team_champions_league_record)s,
+                    %(away_team_champions_league_record)s,
+                    %(home_team_scorers)s,
+                    %(away_team_scorers)s
+                )
+                """,
+                {
+                    'date_time': match[0],
+                    'location': match[1],
+                    'matchup': match[2],
+                    'competition_stage': match[3],
+                    'home_team_id': match[4],
+                    'away_team_id': match[5],
+                    'home_team_goals': match[6],
+                    'away_team_goals': match[7],
+                    'home_team_logo': match[8],
+                    'away_team_logo': match[9],
+                    'home_team_color': match[10],
+                    'away_team_color': match[11],
+                    'winner': match[12],
+                    'home_team_name': match[13],
+                    'away_team_name': match[14],
+                    'home_team_recent_form': match[15],
+                    'away_team_recent_form': match[16],
+                    'home_team_champions_league_record': match[17],
+                    'away_team_champions_league_record': match[18],
+                    'home_team_scorers': match[19],
+                    'away_team_scorers': match[20],
+                }
             )
+
 
 
 seed_teams()

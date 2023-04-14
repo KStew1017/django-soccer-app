@@ -1,32 +1,3 @@
-// const matchdays = document.querySelectorAll('.matchday');
-
-// matchdays.forEach(matchday => {
-//     matchday.addEventListener('click', () => {
-//         document.querySelector('.active').classList.remove('active');
-//         matchday.classList.add('active');
-
-//         const nav = document.querySelector('.matchday-navbar ul');
-//         const activeMatchdayId = nav.querySelector('.active').id;
-//         document.querySelectorAll('[id^="matchday"]').forEach(span => {
-//             const matchdayId = span.id.replace('matchday', '');
-//             if (matchdayId !== activeMatchdayId && matchdayId !== '') {
-//                 span.classList.toggle('hide');
-//             }
-//         });
-//     });
-// });
-
-
-// const nav = document.querySelector('.matchday-navbar ul');
-// const activeMatchdayId = nav.querySelector('.active').id;
-// document.querySelectorAll('[id^="matchday"]').forEach(span => {
-//     const matchdayId = span.id.replace('matchday', '');
-//     if (matchdayId !== activeMatchdayId && matchdayId !== '') {
-//         span.classList.toggle('hide');
-//     }
-// });
-
-
 const nav = document.querySelector('.matchday-navbar ul');
 const spanElements = document.querySelectorAll('[id^="matchday"]');
 const matchdayElements = document.querySelectorAll('.matchday');
@@ -62,4 +33,18 @@ matchdayElements.forEach(li => {
       }
     });
   });
+});
+
+
+const searchInput = document.querySelector('[data-search]')
+const matchList = document.querySelectorAll('.match-card')
+searchInput.addEventListener('input', (e) => {
+  const searchValue = e.target.value.toLowerCase()
+  matchList.forEach(match => {
+    const matchup = match.querySelector('.matchup').textContent.toLowerCase()
+    const homeTeamName = match.querySelector('.home-team-logo').alt.toLowerCase()
+    const awayTeamName = match.querySelector('.away-team-logo').alt.toLowerCase()
+    const isVisible = matchup.includes(searchValue) || homeTeamName.includes(searchValue) || awayTeamName.includes(searchValue)
+    match.classList.toggle('hide', !isVisible)
+  })
 });

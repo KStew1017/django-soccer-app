@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 import datetime
 
 # Create your models here.
@@ -16,8 +17,14 @@ class Match(models.Model):
     away_team_goals = models.PositiveSmallIntegerField(default=0)
     competition_stage = models.CharField(max_length=64, default='TBD')
     winner = models.CharField(max_length=64, default='draw')
-    home_team_abbreviation = models.CharField(max_length=3, default='TBD')
-    away_team_abbreviation = models.CharField(max_length=3, default='TBD')
-    
+    home_team_name = models.CharField(max_length=50, default='TBD')
+    away_team_name = models.CharField(max_length=50, default='TBD')
+    home_team_recent_form = models.CharField(max_length=5, default='TBD')
+    away_team_recent_form = models.CharField(max_length=5, default='TBD')
+    home_team_champions_league_record = models.CharField(max_length=50, default='TBD')
+    away_team_champions_league_record = models.CharField(max_length=50, default='TBD')
+    home_team_scorers = ArrayField(models.CharField(max_length=50, default='TBD'))
+    away_team_scorers = ArrayField(models.CharField(max_length=50, default='TBD'))
+
     def __str__(self):
         return self.matchup

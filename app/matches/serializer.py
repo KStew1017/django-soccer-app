@@ -19,7 +19,13 @@ class MatchSerializer(serializers.ModelSerializer):
             'away_team_logo', 
             'away_team_goals', 
             'competition_stage', 
-            'winner', 
-            'home_team_abbreviation',
-            'away_team_abbreviation',
+            'winner',
+            'away_team_name',
+            'home_team_name',
+            'home_team_recent_form',
+            'away_team_recent_form',
+            'home_team_champions_league_record',
+            'away_team_champions_league_record',
+            'home_team_scorers',
+            'away_team_scorers'
             )
